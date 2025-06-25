@@ -190,6 +190,117 @@ app.get("/environment", (req, res) => {
   })
 })
 
+
+// Get available test files (filtered by TestConfig)
+app.get("/test-files", (req, res) => {
+  const testDir = path.join(__dirname, "selenium-project/src/test/java/tests")
+  try {
+    // Read TestConfig to get visible tests
+    const configPath = path.join(__dirname, "selenium-project/src/test/java/config/TestConfig.java")
+    let visibleTests = ["AmazonTest.java", "RedBusTest.java"] // Default fallback
+
+    if (fs.existsSync(configPath)) {
+      const configContent = fs.readFileSync(configPath, "utf8")
+      // Extract visible tests from config (simple parsing)
+      const visibleTestsMatch = configContent.match(/VISIBLE_TESTS = Arrays\.asList$$([\s\S]*?)$$/)
+      if (visibleTestsMatch) {
+        visibleTests = visibleTestsMatch[1]
+          .split(",")
+          .map((test) => test.trim().replace(/"/g, ""))
+          .filter((test) => test && !test.startsWith("//"))
+      }
+    }
+
+    const files = fs
+      .readdirSync(testDir)
+      .filter((file) => file.endsWith(".java") && visibleTests.includes(file))
+      .map((file) => {
+        const content = fs.readFileSync(path.join(testDir, file), "utf8")
+
+        // Get description from TestConfig
+        let description = "Selenium WebDriver automation test"
+        if (fs.existsSync(configPath)) {
+          const configContent = fs.readFileSync(configPath, "utf8")
+          const descMatch = configContent.match(new RegExp(`case "${file}":[\\s\\S]*?return "([^"]+)"`))
+          if (descMatch) {
+            description = descMatch[1]
+          }
+        }
+
+        return {
+          name: file,
+          content: content,
+          description: description,
+        }
+      })
+    res.json(files)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to read test files" })
+  }
+})
+
+// Get utility files
+app.get("/utility-files", (req, res) => {
+  const utilsDir = path.join(__dirname, "selenium-project/src/test/java/utils")
+  try {
+    if (!fs.existsSync(utilsDir)) {
+      return res.json([])
+    }
+
+    const files = fs
+      .readdirSync(utilsDir)
+      .filter((file) => file.endsWith(".java"))
+      .map((file) => {
+        const content = fs.readFileSync(path.join(utilsDir, file), "utf8")
+
+        // Get description based on file name
+        let description = "Utility class for automation testing"
+        switch (file) {
+          case "ExcelUtils.java":
+            description = "Excel file operations - Read/Write data, cell formatting, data-driven testing support"
+            break
+          case "ActionUtils.java":
+            description =
+              "Selenium Actions utility - Mouse hover, drag & drop, keyboard shortcuts, element interactions"
+            break
+          case "WaitUtils.java":
+            description = "Custom wait strategies - Element visibility, page load, dynamic content handling"
+            break
+          case "ScreenshotUtils.java":
+            description = "Screenshot utilities - Full page capture, element screenshots, failure screenshots"
+            break
+        }
+
+        return {
+          name: file,
+          content: content,
+          description: description,
+        }
+      })
+    res.json(files)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to read utility files" })
+  }
+})
+
+// Get test suites
+app.get("/test-suites", (req, res) => {
+  const suiteDir = path.join(__dirname, "selenium-project")
+  try {
+    const suites = fs
+      .readdirSync(suiteDir)
+      .filter((file) => file.startsWith("testng") && file.endsWith(".xml"))
+      .map((file) => ({
+        name: file,
+        displayName: file.replace("testng-", "").replace(".xml", "").replace("testng", "Amazon"),
+      }))
+    res.json(suites)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to read test suites" })
+  }
+})
+
+
 // Rest of your existing endpoints...
 // (Keep all other endpoints from your original server.js)
 
