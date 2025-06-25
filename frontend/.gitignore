@@ -1,0 +1,94 @@
+# Frontend specific
+.next/
+out/
+.next-server/
+.next/cache/
+.next/standalone/
+.next/types/
+
+# Build output
+dist/
+build/
+.next-build/
+.next-build-id
+.next-log.txt
+
+# Frontend dependencies
+node_modules/
+.npm
+.pnpm
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Environment files
+.env*
+!.env.example
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+~$*
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+jest-test-results.json
+
+# Production
+.cache/
+.turbo/
+
+# Backend (kept from previous)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+*.egg
+pip-log.txt
+target/
+.settings/
+.classpath
+.project
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+test-output/
+segments/*
+!segments/.gitkeep
+
+# TypeScript/JavaScript
+*.js.map
+*.d.ts
+*.tsbuildinfo
+
+# Optional: Storybook
+storybook-static/

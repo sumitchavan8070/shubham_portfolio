@@ -1,0 +1,74 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+*.egg
+pip-log.txt
+
+# Java/Maven
+target/
+.settings/
+.classpath
+.project
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+*.log
+
+# Selenium/TestNG
+test-output/
+*.eml
+*.trx
+*.cache
+*.log
+*.tmp
+*.bak
+
+# Video recordings
+segments/*
+!segments/.gitkeep  # Keep empty directory structure
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+~$*
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE specific
+.vscode/
+.idea/
+
+# OS generated
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temp files
+temp/
+tmp/
