@@ -1,13 +1,19 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Play,
   Square,
@@ -33,137 +39,142 @@ import {
   ExternalLink,
   Menu,
   X,
-} from "lucide-react"
-import Image from "next/image"
+} from "lucide-react";
+import Image from "next/image";
 
 interface TestFile {
-  name: string
-  content: string
-  description: string
+  name: string;
+  content: string;
+  description: string;
 }
 
 interface UtilityFile {
-  name: string
-  content: string
-  description: string
+  name: string;
+  content: string;
+  description: string;
 }
 
 interface TestStatus {
-  isRecording: boolean
-  isTestRunning: boolean
-  runningTests: string[]
-  timestamp: string
+  isRecording: boolean;
+  isTestRunning: boolean;
+  runningTests: string[];
+  timestamp: string;
 }
 
 interface TestSuite {
-  name: string
-  displayName: string
+  name: string;
+  displayName: string;
 }
 
 export default function AutomationPortfolio() {
-  const [testFiles, setTestFiles] = useState<TestFile[]>([])
-  const [utilityFiles, setUtilityFiles] = useState<UtilityFile[]>([])
-  const [testSuites, setTestSuites] = useState<TestSuite[]>([])
-  const [selectedTest, setSelectedTest] = useState<TestFile | null>(null)
-  const [selectedUtility, setSelectedUtility] = useState<UtilityFile | null>(null)
-  const [selectedSuite, setSelectedSuite] = useState<string>("")
+  const [testFiles, setTestFiles] = useState<TestFile[]>([]);
+  const [utilityFiles, setUtilityFiles] = useState<UtilityFile[]>([]);
+  const [testSuites, setTestSuites] = useState<TestSuite[]>([]);
+  const [selectedTest, setSelectedTest] = useState<TestFile | null>(null);
+  const [selectedUtility, setSelectedUtility] = useState<UtilityFile | null>(
+    null
+  );
+  const [selectedSuite, setSelectedSuite] = useState<string>("");
   const [status, setStatus] = useState<TestStatus>({
     isRecording: false,
     isTestRunning: false,
     runningTests: [],
     timestamp: "",
-  })
-  const [videoUrl, setVideoUrl] = useState("")
-  const [loading, setLoading] = useState<{ [key: string]: boolean }>({})
-  const [suiteLoading, setSuiteLoading] = useState(false)
-  const [message, setMessage] = useState("")
-  const [copiedUtility, setCopiedUtility] = useState<string | null>(null)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  });
+  const [videoUrl, setVideoUrl] = useState("");
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
+  const [suiteLoading, setSuiteLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [copiedUtility, setCopiedUtility] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Refs for smooth scrolling
-  const sourceCodeRef = useRef<HTMLDivElement>(null)
-  const recordingRef = useRef<HTMLDivElement>(null)
-  const utilityCodeRef = useRef<HTMLDivElement>(null)
+  const sourceCodeRef = useRef<HTMLDivElement>(null);
+  const recordingRef = useRef<HTMLDivElement>(null);
+  const utilityCodeRef = useRef<HTMLDivElement>(null);
 
-  const BACKEND_URL = "http://localhost:5000"
+  const BACKEND_URL = "http://43.204.98.173:5000";
 
   useEffect(() => {
-    fetchTestFiles()
-    fetchUtilityFiles()
-    fetchTestSuites()
-    checkStatus()
-    const interval = setInterval(checkStatus, 2000)
-    return () => clearInterval(interval)
-  }, [])
+    fetchTestFiles();
+    fetchUtilityFiles();
+    fetchTestSuites();
+    checkStatus();
+    const interval = setInterval(checkStatus, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuOpen && !(event.target as Element).closest(".mobile-menu-container")) {
-        setMobileMenuOpen(false)
+      if (
+        mobileMenuOpen &&
+        !(event.target as Element).closest(".mobile-menu-container")
+      ) {
+        setMobileMenuOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [mobileMenuOpen])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [mobileMenuOpen]);
 
   const fetchTestFiles = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/test-files`)
+      const response = await fetch(`${BACKEND_URL}/test-files`);
       if (response.ok) {
-        const files = await response.json()
-        setTestFiles(files)
+        const files = await response.json();
+        setTestFiles(files);
         if (files.length > 0) {
-          setSelectedTest(files[0])
+          setSelectedTest(files[0]);
         }
       }
     } catch (error) {
-      console.error("Failed to fetch test files:", error)
+      console.error("Failed to fetch test files:", error);
     }
-  }
+  };
 
   const fetchUtilityFiles = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/utility-files`)
+      const response = await fetch(`${BACKEND_URL}/utility-files`);
       if (response.ok) {
-        const files = await response.json()
-        setUtilityFiles(files)
+        const files = await response.json();
+        setUtilityFiles(files);
         if (files.length > 0) {
-          setSelectedUtility(files[0])
+          setSelectedUtility(files[0]);
         }
       }
     } catch (error) {
-      console.error("Failed to fetch utility files:", error)
+      console.error("Failed to fetch utility files:", error);
     }
-  }
+  };
 
   const fetchTestSuites = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/test-suites`)
+      const response = await fetch(`${BACKEND_URL}/test-suites`);
       if (response.ok) {
-        const suites = await response.json()
-        setTestSuites(suites)
+        const suites = await response.json();
+        setTestSuites(suites);
         if (suites.length > 0) {
-          setSelectedSuite(suites[0].name)
+          setSelectedSuite(suites[0].name);
         }
       }
     } catch (error) {
-      console.error("Failed to fetch test suites:", error)
+      console.error("Failed to fetch test suites:", error);
     }
-  }
+  };
 
   const checkStatus = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/status`)
+      const response = await fetch(`${BACKEND_URL}/status`);
       if (response.ok) {
-        const statusData = await response.json()
-        setStatus(statusData)
+        const statusData = await response.json();
+        setStatus(statusData);
       }
     } catch (error) {
-      console.error("Failed to check status:", error)
+      console.error("Failed to check status:", error);
     }
-  }
+  };
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -171,69 +182,77 @@ export default function AutomationPortfolio() {
         behavior: "smooth",
         block: "start",
         inline: "nearest",
-      })
+      });
     }
-  }
+  };
 
   const executeIndividualTest = async (testName: string) => {
-    setLoading((prev) => ({ ...prev, [testName]: true }))
-    setMessage(`Starting ${testName.replace(".java", "")} execution...`)
-    setVideoUrl("")
+    setLoading((prev) => ({ ...prev, [testName]: true }));
+    setMessage(`Starting ${testName.replace(".java", "")} execution...`);
+    setVideoUrl("");
 
     // Scroll to recording section on mobile
     setTimeout(() => {
-      scrollToSection(recordingRef)
-    }, 500)
+      scrollToSection(recordingRef);
+    }, 500);
 
     try {
       const response = await fetch(`${BACKEND_URL}/execute-individual-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ testName }),
-      })
+      });
 
       if (response.ok) {
-        const result = await response.json()
-        setMessage(result.message)
+        const result = await response.json();
+        setMessage(result.message);
 
         const pollForCompletion = setInterval(async () => {
           try {
-            const statusResponse = await fetch(`${BACKEND_URL}/status`)
+            const statusResponse = await fetch(`${BACKEND_URL}/status`);
             if (statusResponse.ok) {
-              const currentStatus = await statusResponse.json()
+              const currentStatus = await statusResponse.json();
 
               if (!currentStatus.runningTests.includes(testName)) {
-                clearInterval(pollForCompletion)
+                clearInterval(pollForCompletion);
 
                 setTimeout(async () => {
                   try {
-                    const videoResponse = await fetch(`${BACKEND_URL}/segments/recording.mp4`)
+                    const videoResponse = await fetch(
+                      `${BACKEND_URL}/segments/recording.mp4`
+                    );
                     if (videoResponse.ok) {
-                      setVideoUrl(`${BACKEND_URL}/segments/recording.mp4?t=${Date.now()}`)
+                      setVideoUrl(
+                        `${BACKEND_URL}/segments/recording.mp4?t=${Date.now()}`
+                      );
                     }
                   } catch (error) {
-                    console.error("Video not available:", error)
+                    console.error("Video not available:", error);
                   }
-                }, 2000)
+                }, 2000);
 
-                setMessage(`${testName.replace(".java", "")} execution completed!`)
-                setLoading((prev) => ({ ...prev, [testName]: false }))
+                setMessage(
+                  `${testName.replace(".java", "")} execution completed!`
+                );
+                setLoading((prev) => ({ ...prev, [testName]: false }));
               }
             }
           } catch (error) {
-            console.error("Error polling status:", error)
+            console.error("Error polling status:", error);
           }
-        }, 2000)
+        }, 2000);
       } else {
-        const errorData = await response.json()
-        setMessage(`Error: ${errorData.error || "Failed to start test execution"}`)
-        setLoading((prev) => ({ ...prev, [testName]: false }))
+        const errorData = await response.json();
+        setMessage(
+          `Error: ${errorData.error || "Failed to start test execution"}`
+        );
+        setLoading((prev) => ({ ...prev, [testName]: false }));
       }
     } catch (error) {
-      setMessage(`Error: ${error}`)
-      setLoading((prev) => ({ ...prev, [testName]: false }))
+      setMessage(`Error: ${error}`);
+      setLoading((prev) => ({ ...prev, [testName]: false }));
     }
-  }
+  };
 
   const stopIndividualTest = async (testName: string) => {
     try {
@@ -241,114 +260,122 @@ export default function AutomationPortfolio() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ testName }),
-      })
+      });
       if (response.ok) {
-        setMessage(`${testName.replace(".java", "")} execution stopped`)
-        setLoading((prev) => ({ ...prev, [testName]: false }))
+        setMessage(`${testName.replace(".java", "")} execution stopped`);
+        setLoading((prev) => ({ ...prev, [testName]: false }));
       }
     } catch (error) {
-      setMessage(`Error stopping ${testName}: ${error}`)
+      setMessage(`Error stopping ${testName}: ${error}`);
     }
-  }
+  };
 
   const executeSuite = async () => {
-    setSuiteLoading(true)
-    setMessage(`Starting test suite execution...`)
-    setVideoUrl("")
+    setSuiteLoading(true);
+    setMessage(`Starting test suite execution...`);
+    setVideoUrl("");
 
     // Scroll to recording section on mobile
     setTimeout(() => {
-      scrollToSection(recordingRef)
-    }, 500)
+      scrollToSection(recordingRef);
+    }, 500);
 
     try {
       const response = await fetch(`${BACKEND_URL}/execute-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ testSuite: selectedSuite }),
-      })
+      });
 
       if (response.ok) {
-        const result = await response.json()
-        setMessage(result.message)
+        const result = await response.json();
+        setMessage(result.message);
 
         const pollForCompletion = setInterval(async () => {
           try {
-            const statusResponse = await fetch(`${BACKEND_URL}/status`)
+            const statusResponse = await fetch(`${BACKEND_URL}/status`);
             if (statusResponse.ok) {
-              const currentStatus = await statusResponse.json()
+              const currentStatus = await statusResponse.json();
 
               if (!currentStatus.isTestRunning) {
-                clearInterval(pollForCompletion)
+                clearInterval(pollForCompletion);
 
                 setTimeout(async () => {
                   try {
-                    const videoResponse = await fetch(`${BACKEND_URL}/segments/recording.mp4`)
+                    const videoResponse = await fetch(
+                      `${BACKEND_URL}/segments/recording.mp4`
+                    );
                     if (videoResponse.ok) {
-                      setVideoUrl(`${BACKEND_URL}/segments/recording.mp4?t=${Date.now()}`)
+                      setVideoUrl(
+                        `${BACKEND_URL}/segments/recording.mp4?t=${Date.now()}`
+                      );
                     }
                   } catch (error) {
-                    console.error("Video not available:", error)
+                    console.error("Video not available:", error);
                   }
-                }, 2000)
+                }, 2000);
 
-                setMessage("Test suite execution completed!")
-                setSuiteLoading(false)
+                setMessage("Test suite execution completed!");
+                setSuiteLoading(false);
               }
             }
           } catch (error) {
-            console.error("Error polling status:", error)
+            console.error("Error polling status:", error);
           }
-        }, 2000)
+        }, 2000);
       } else {
-        const errorData = await response.json()
-        setMessage(`Error: ${errorData.error || "Failed to start test execution"}`)
-        setSuiteLoading(false)
+        const errorData = await response.json();
+        setMessage(
+          `Error: ${errorData.error || "Failed to start test execution"}`
+        );
+        setSuiteLoading(false);
       }
     } catch (error) {
-      setMessage(`Error: ${error}`)
-      setSuiteLoading(false)
+      setMessage(`Error: ${error}`);
+      setSuiteLoading(false);
     }
-  }
+  };
 
   const stopSuiteExecution = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/stop-recording`, { method: "POST" })
+      const response = await fetch(`${BACKEND_URL}/stop-recording`, {
+        method: "POST",
+      });
       if (response.ok) {
-        setMessage("Suite execution stopped")
-        setSuiteLoading(false)
+        setMessage("Suite execution stopped");
+        setSuiteLoading(false);
       }
     } catch (error) {
-      setMessage(`Error stopping suite: ${error}`)
+      setMessage(`Error stopping suite: ${error}`);
     }
-  }
+  };
 
   const copyUtilityCode = async (utilityName: string, content: string) => {
     try {
-      await navigator.clipboard.writeText(content)
-      setCopiedUtility(utilityName)
-      setTimeout(() => setCopiedUtility(null), 2000)
+      await navigator.clipboard.writeText(content);
+      setCopiedUtility(utilityName);
+      setTimeout(() => setCopiedUtility(null), 2000);
     } catch (error) {
-      console.error("Failed to copy code:", error)
+      console.error("Failed to copy code:", error);
     }
-  }
+  };
 
   const downloadResume = () => {
-    const link = document.createElement("a")
-    link.href = "/Shubham_Chavan_Resume.pdf"
-    link.download = "Shubham_Chavan_Resume.pdf"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    setMobileMenuOpen(false) // Close menu after action
-  }
+    const link = document.createElement("a");
+    link.href = "/Shubham_Chavan_Resume.pdf";
+    link.download = "Shubham_Chavan_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setMobileMenuOpen(false); // Close menu after action
+  };
 
   const handleViewSourceCode = (utility: UtilityFile) => {
-    setSelectedUtility(utility)
+    setSelectedUtility(utility);
     setTimeout(() => {
-      scrollToSection(utilityCodeRef)
-    }, 100)
-  }
+      scrollToSection(utilityCodeRef);
+    }, 100);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
@@ -391,7 +418,9 @@ export default function AutomationPortfolio() {
                     <FileText className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-slate-900 dark:text-white">Download Resume</div>
+                    <div className="font-bold text-slate-900 dark:text-white">
+                      Download Resume
+                    </div>
                     <div className="text-xs text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       PDF • Professional CV
                     </div>
@@ -410,7 +439,11 @@ export default function AutomationPortfolio() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="relative z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-2 border-blue-200 dark:border-blue-800 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300"
               >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
               </Button>
 
               {/* Mobile Menu Dropdown */}
@@ -427,7 +460,9 @@ export default function AutomationPortfolio() {
                       </div>
                       <div>
                         <div className="font-medium">Download Resume</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">PDF Format</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          PDF Format
+                        </div>
                       </div>
                     </Button>
 
@@ -438,7 +473,9 @@ export default function AutomationPortfolio() {
                         </div>
                         <div>
                           <div className="font-medium">Theme</div>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">Dark/Light Mode</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400">
+                            Dark/Light Mode
+                          </div>
                         </div>
                       </div>
                       <ThemeToggle />
@@ -482,7 +519,10 @@ export default function AutomationPortfolio() {
                         <Target className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                         Test Automation Engineer
                       </Badge>
-                      <Badge variant="outline" className="px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base">
+                      <Badge
+                        variant="outline"
+                        className="px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-base"
+                      >
                         <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                         3.7+ Years
                       </Badge>
@@ -494,8 +534,9 @@ export default function AutomationPortfolio() {
                     <span className="font-semibold text-blue-600 dark:text-blue-400">
                       strong foundation in software testing
                     </span>{" "}
-                    and quality assurance. I possess a solid technical background complemented by my engineering degree,
-                    allowing me to effectively
+                    and quality assurance. I possess a solid technical
+                    background complemented by my engineering degree, allowing
+                    me to effectively
                     <span className="font-semibold text-purple-600 dark:text-purple-400">
                       {" "}
                       bridge the gap between development and testing
@@ -508,19 +549,25 @@ export default function AutomationPortfolio() {
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors">
                         <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      <span className="font-medium text-xs sm:text-sm md:text-base">shubhamchavan6795@gmail.com</span>
+                      <span className="font-medium text-xs sm:text-sm md:text-base">
+                        shubhamchavan6795@gmail.com
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group">
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center group-hover:bg-emerald-200 dark:group-hover:bg-emerald-800/50 transition-colors">
                         <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      <span className="font-medium text-xs sm:text-sm md:text-base">+91 7387678795</span>
+                      <span className="font-medium text-xs sm:text-sm md:text-base">
+                        +91 7387678795
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors group">
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors">
                         <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
-                      <span className="font-medium text-xs sm:text-sm md:text-base">Pune, India</span>
+                      <span className="font-medium text-xs sm:text-sm md:text-base">
+                        Pune, India
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -592,7 +639,9 @@ export default function AutomationPortfolio() {
                         </p>
                         <div className="flex items-center gap-1 sm:gap-2 text-slate-600 dark:text-slate-400">
                           <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
-                          <span className="font-medium text-xs sm:text-sm">{job.period}</span>
+                          <span className="font-medium text-xs sm:text-sm">
+                            {job.period}
+                          </span>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors flex-shrink-0" />
@@ -615,7 +664,8 @@ export default function AutomationPortfolio() {
                 Handy Utility Scripts
               </CardTitle>
               <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
-                Production-ready utility classes for automation testing • Click to copy code
+                Production-ready utility classes for automation testing • Click
+                to copy code
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -634,7 +684,9 @@ export default function AutomationPortfolio() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => copyUtilityCode(utility.name, utility.content)}
+                          onClick={() =>
+                            copyUtilityCode(utility.name, utility.content)
+                          }
                           className="h-8 w-8 sm:h-9 sm:w-9 p-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-950/50 transition-colors"
                         >
                           {copiedUtility === utility.name ? (
@@ -675,7 +727,12 @@ export default function AutomationPortfolio() {
                           {selectedUtility.name}
                         </CardTitle>
                         <Button
-                          onClick={() => copyUtilityCode(selectedUtility.name, selectedUtility.content)}
+                          onClick={() =>
+                            copyUtilityCode(
+                              selectedUtility.name,
+                              selectedUtility.content
+                            )
+                          }
                           className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-2 h-auto"
                         >
                           {copiedUtility === selectedUtility.name ? (
@@ -715,7 +772,8 @@ export default function AutomationPortfolio() {
                 Live Test Execution
               </CardTitle>
               <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
-                Interactive automation tests with real-time execution and screen recording
+                Interactive automation tests with real-time execution and screen
+                recording
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -731,7 +789,11 @@ export default function AutomationPortfolio() {
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                             <Button
-                              variant={selectedTest?.name === file.name ? "default" : "outline"}
+                              variant={
+                                selectedTest?.name === file.name
+                                  ? "default"
+                                  : "outline"
+                              }
                               onClick={() => setSelectedTest(file)}
                               className="flex items-center gap-2 text-sm sm:text-base font-semibold px-4 sm:px-6 py-2 sm:py-3 h-auto justify-start sm:justify-center"
                             >
@@ -742,7 +804,11 @@ export default function AutomationPortfolio() {
                             </Button>
                             <div className="flex items-center gap-2 flex-wrap">
                               <Badge
-                                variant={status.runningTests.includes(file.name) ? "default" : "secondary"}
+                                variant={
+                                  status.runningTests.includes(file.name)
+                                    ? "default"
+                                    : "secondary"
+                                }
                                 className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium ${
                                   status.runningTests.includes(file.name)
                                     ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white"
@@ -761,12 +827,13 @@ export default function AutomationPortfolio() {
                                   </>
                                 )}
                               </Badge>
-                              {status.isRecording && status.runningTests.includes(file.name) && (
-                                <Badge className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-2 sm:px-3 py-1 animate-pulse text-xs sm:text-sm">
-                                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1 sm:mr-2 animate-pulse"></div>
-                                  Recording
-                                </Badge>
-                              )}
+                              {status.isRecording &&
+                                status.runningTests.includes(file.name) && (
+                                  <Badge className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-2 sm:px-3 py-1 animate-pulse text-xs sm:text-sm">
+                                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1 sm:mr-2 animate-pulse"></div>
+                                    Recording
+                                  </Badge>
+                                )}
                             </div>
                           </div>
                           <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -776,7 +843,10 @@ export default function AutomationPortfolio() {
                         <div className="flex items-center gap-2 sm:gap-3 lg:ml-6">
                           <Button
                             onClick={() => executeIndividualTest(file.name)}
-                            disabled={loading[file.name] || status.runningTests.includes(file.name)}
+                            disabled={
+                              loading[file.name] ||
+                              status.runningTests.includes(file.name)
+                            }
                             className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 h-auto font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 text-xs sm:text-sm flex-1 sm:flex-none"
                           >
                             {loading[file.name] ? (
@@ -933,7 +1003,9 @@ export default function AutomationPortfolio() {
                         onClick={() => window.open(videoUrl, "_blank")}
                       >
                         <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                        <span className="font-semibold">Download Recording</span>
+                        <span className="font-semibold">
+                          Download Recording
+                        </span>
                         <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" />
                       </Button>
                     </div>
@@ -942,8 +1014,12 @@ export default function AutomationPortfolio() {
                       <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
                         <Video className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 text-slate-400" />
                       </div>
-                      <p className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2">Ready for Recording</p>
-                      <p className="text-xs sm:text-sm md:text-base">Execute a test to see live automation in action</p>
+                      <p className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2">
+                        Ready for Recording
+                      </p>
+                      <p className="text-xs sm:text-sm md:text-base">
+                        Execute a test to see live automation in action
+                      </p>
                       {status.isRecording && (
                         <div className="mt-4 sm:mt-6 flex items-center gap-2 sm:gap-3 text-red-500">
                           <div className="w-3 h-3 sm:w-4 sm:h-4 bg-red-500 rounded-full animate-pulse"></div>
@@ -980,8 +1056,12 @@ export default function AutomationPortfolio() {
                     </span>
                   </h2>
                   <p className="text-lg sm:text-xl md:text-2xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
-                    3.7+ years of proven expertise in Selenium WebDriver, TestNG, and CI/CD automation.
-                    <span className="font-semibold text-white"> Ready to deliver quality at scale.</span>
+                    3.7+ years of proven expertise in Selenium WebDriver,
+                    TestNG, and CI/CD automation.
+                    <span className="font-semibold text-white">
+                      {" "}
+                      Ready to deliver quality at scale.
+                    </span>
                   </p>
                 </div>
 
@@ -1007,18 +1087,26 @@ export default function AutomationPortfolio() {
                   <div className="flex items-center gap-4 sm:gap-6 text-white/80">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
-                      <span className="font-medium text-sm sm:text-base">Immediate Availability</span>
+                      <span className="font-medium text-sm sm:text-base">
+                        Immediate Availability
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
-                      <span className="font-medium text-sm sm:text-base">Remote Ready</span>
+                      <span className="font-medium text-sm sm:text-base">
+                        Remote Ready
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-white/20">
                   {[
-                    { label: "Years Experience", value: "3.7+", icon: Calendar },
+                    {
+                      label: "Years Experience",
+                      value: "3.7+",
+                      icon: Calendar,
+                    },
                     { label: "Test Cases", value: "500+", icon: Target },
                     { label: "Projects", value: "15+", icon: Briefcase },
                     { label: "Success Rate", value: "99%", icon: Star },
@@ -1027,8 +1115,12 @@ export default function AutomationPortfolio() {
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-2 sm:mb-3">
                         <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                       </div>
-                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
-                      <div className="text-xs sm:text-sm text-blue-200">{stat.label}</div>
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs sm:text-sm text-blue-200">
+                        {stat.label}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -1047,7 +1139,8 @@ export default function AutomationPortfolio() {
                   "Advanced browser automation with Chrome WebDriver, complex page interactions, element handling, and cross-browser testing capabilities.",
                 icon: Globe,
                 gradient: "from-blue-500 to-cyan-500",
-                bgGradient: "from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20",
+                bgGradient:
+                  "from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20",
               },
               {
                 title: "TestNG Framework",
@@ -1055,7 +1148,8 @@ export default function AutomationPortfolio() {
                   "Complete test lifecycle management with TestNG, parallel execution, data-driven testing, and comprehensive reporting with custom listeners.",
                 icon: Target,
                 gradient: "from-emerald-500 to-teal-500",
-                bgGradient: "from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20",
+                bgGradient:
+                  "from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20",
               },
               {
                 title: "Test Automation",
@@ -1063,7 +1157,8 @@ export default function AutomationPortfolio() {
                   "End-to-end automation solutions with screen recording, CI/CD integration, and scalable test architecture for enterprise applications.",
                 icon: Zap,
                 gradient: "from-purple-500 to-pink-500",
-                bgGradient: "from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20",
+                bgGradient:
+                  "from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20",
               },
             ].map((skill, index) => (
               <Card
@@ -1106,5 +1201,5 @@ export default function AutomationPortfolio() {
         </Button>
       </div>
     </div>
-  )
+  );
 }
