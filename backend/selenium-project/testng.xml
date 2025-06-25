@@ -6,7 +6,7 @@
     
     <test name="AmazonTest">
         <classes>
-            <class name="tests.AmazonTestHeadless"/>
+            <class name="tests.AmazonTest"/>
         </classes>
     </test>
 </suite>
