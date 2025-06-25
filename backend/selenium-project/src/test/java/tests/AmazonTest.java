@@ -33,18 +33,18 @@ public class AmazonTest{
                            System.getenv("DISPLAY") == null ||
                            ":99".equals(System.getenv("DISPLAY"));
         
-        // if (isHeadless) {
-        //     System.out.println("🖥️ Running in HEADLESS mode (AWS EC2)");
-        //     options.addArguments("--headless=new");
-        //     options.addArguments("--no-sandbox");
-        //     options.addArguments("--disable-dev-shm-usage");
-        //     options.addArguments("--disable-gpu");
-        //     options.addArguments("--remote-debugging-port=9222");
-        //     options.addArguments("--window-size=1920,1080");
-        // } else {
-        //     System.out.println("🖥️ Running in DESKTOP mode");
-        //     options.addArguments("--start-maximized");
-        // }
+        if (isHeadless) {
+            System.out.println("🖥️ Running in HEADLESS mode (AWS EC2)");
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--remote-debugging-port=9222");
+            options.addArguments("--window-size=1920,1080");
+        } else {
+            System.out.println("🖥️ Running in DESKTOP mode");
+            options.addArguments("--start-maximized");
+        }
         
         // Common options for both modes
         options.addArguments("--disable-blink-features=AutomationControlled");
