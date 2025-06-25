@@ -69,18 +69,14 @@ public class AmazonTest {
             driver.get("https://www.amazon.com");
 
             // Wait for page to load and verify title
-            // waitUtils.waitForTitleContains("Amazon", 15); // Increased timeout
-            // String title = driver.getTitle();
+            waitUtils.waitForTitleContains("Amazon", 5); // Increased timeout
+            String title = driver.getTitle();
 
             // System.out.println("📄 Page Title: " + title);
-            // Assert.assertTrue(title.contains("Amazon"), "Amazon title verification
-            // failed");
+            Assert.assertTrue(title.contains("Amazon"), "Amazon title verification failed");
 
             // // Take screenshot for documentation
-            // screenshotUtils.takeScreenshot("amazon_homepage");
-
-            // // Take a small pause to show the page
-            // Thread.sleep(3000); // Increased for better recording
+            screenshotUtils.takeScreenshot("amazon_homepage");
 
             System.out.println("✅ Amazon launch test passed");
         } catch (Exception e) {

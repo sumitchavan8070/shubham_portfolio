@@ -39,6 +39,7 @@ import {
   ExternalLink,
   Menu,
   X,
+  Snail,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -392,14 +393,14 @@ export default function AutomationPortfolio() {
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                  <Snail className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div className="text-center sm:text-left">
                   <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent leading-tight">
                     Test Automation Portfolio
                   </h1>
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-300 font-medium mt-1 sm:mt-2">
-                    Selenium WebDriver • TestNG • CI/CD • Screen Recording
+                    Selenium • Java • TestNG
                   </p>
                 </div>
               </div>
@@ -653,116 +654,8 @@ export default function AutomationPortfolio() {
           </Card>
         </section>
 
-        {/* Utility Scripts Showcase */}
-        <section>
-          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
-            <CardHeader className="pb-4 sm:pb-6 md:pb-8">
-              <CardTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                  <Code className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                </div>
-                Handy Utility Scripts
-              </CardTitle>
-              <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
-                Production-ready utility classes for automation testing • Click
-                to copy code
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                {utilityFiles.map((utility, index) => (
-                  <Card
-                    key={index}
-                    className="group relative overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <CardContent className="relative p-4 sm:p-6">
-                      <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                          <Code className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() =>
-                            copyUtilityCode(utility.name, utility.content)
-                          }
-                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-950/50 transition-colors"
-                        >
-                          {copiedUtility === utility.name ? (
-                            <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
-                          ) : (
-                            <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
-                          )}
-                        </Button>
-                      </div>
-                      <h3 className="font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white mb-2 sm:mb-3">
-                        {utility.name.replace(".java", "")}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
-                        {utility.description}
-                      </p>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleViewSourceCode(utility)}
-                        className="w-full text-xs sm:text-sm group-hover:bg-blue-50 dark:group-hover:bg-blue-950/50 transition-colors font-medium"
-                      >
-                        <Code className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                        View Source Code
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {/* Utility Code Display with Ref */}
-              <div ref={utilityCodeRef}>
-                {selectedUtility && (
-                  <Card className="bg-slate-900 dark:bg-slate-950 border-slate-700 shadow-2xl">
-                    <CardHeader className="pb-3 sm:pb-4">
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-                        <CardTitle className="text-emerald-400 flex items-center gap-2 text-base sm:text-lg md:text-xl">
-                          <Code className="h-4 w-4 sm:h-5 sm:w-5" />
-                          {selectedUtility.name}
-                        </CardTitle>
-                        <Button
-                          onClick={() =>
-                            copyUtilityCode(
-                              selectedUtility.name,
-                              selectedUtility.content
-                            )
-                          }
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-2 h-auto"
-                        >
-                          {copiedUtility === selectedUtility.name ? (
-                            <>
-                              <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                              Copied!
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                              Copy Code
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <pre className="bg-slate-950 text-emerald-400 p-3 sm:p-4 md:p-6 rounded-lg overflow-x-auto text-xs sm:text-sm max-h-60 sm:max-h-80 overflow-y-auto border border-slate-700 font-mono">
-                        <code>{selectedUtility.content}</code>
-                      </pre>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
         {/* Test Scripts Section */}
-        <section>
+        {/* <section>
           <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
             <CardHeader className="pb-4 sm:pb-6 md:pb-8">
               <CardTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold">
@@ -877,10 +770,133 @@ export default function AutomationPortfolio() {
               </div>
             </CardContent>
           </Card>
+        </section> */}
+
+        <section>
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
+            <CardHeader className="pb-4 sm:pb-6 md:pb-8">
+              <CardTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                  <Play className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                </div>
+                Live Test Execution
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                Interactive automation tests with real-time execution and screen
+                recording
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Optimized grid container with auto-adjusting columns */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-fr">
+                {testFiles.map((file, index) => (
+                  <Card
+                    key={index}
+                    className="group relative h-full flex flex-col overflow-hidden bg-gradient-to-r from-white via-slate-50 to-white dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <CardContent className="relative p-4 sm:p-6 flex flex-col flex-1">
+                      <div className="flex flex-col flex-1 gap-4">
+                        {/* Test Name Button */}
+                        <Button
+                          variant={
+                            selectedTest?.name === file.name
+                              ? "default"
+                              : "outline"
+                          }
+                          onClick={() => setSelectedTest(file)}
+                          className="flex items-center gap-2 text-sm sm:text-base font-semibold px-4 sm:px-6 py-2 sm:py-3 h-auto justify-start w-full"
+                        >
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <Code className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                          </div>
+                          <span className="truncate">
+                            {file.name.replace(".java", "")}
+                          </span>
+                        </Button>
+
+                        {/* Status Badges */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Badge
+                            variant={
+                              status.runningTests.includes(file.name)
+                                ? "default"
+                                : "secondary"
+                            }
+                            className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium ${
+                              status.runningTests.includes(file.name)
+                                ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white"
+                                : ""
+                            }`}
+                          >
+                            {status.runningTests.includes(file.name) ? (
+                              <>
+                                <Loader2 className="h-2 w-2 sm:h-3 sm:w-3 mr-1 animate-spin" />
+                                Running
+                              </>
+                            ) : (
+                              <>
+                                <Star className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
+                                Ready
+                              </>
+                            )}
+                          </Badge>
+                          {status.isRecording &&
+                            status.runningTests.includes(file.name) && (
+                              <Badge className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-2 sm:px-3 py-1 animate-pulse text-xs sm:text-sm">
+                                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1 sm:mr-2 animate-pulse"></div>
+                                Recording
+                              </Badge>
+                            )}
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                          {file.description}
+                        </p>
+
+                        {/* Action Buttons - pushed to bottom with mt-auto */}
+                        <div className="mt-auto flex items-center gap-2 sm:gap-3">
+                          <Button
+                            onClick={() => executeIndividualTest(file.name)}
+                            disabled={
+                              loading[file.name] ||
+                              status.runningTests.includes(file.name)
+                            }
+                            className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 h-auto font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 text-xs sm:text-sm"
+                          >
+                            {loading[file.name] ? (
+                              <>
+                                <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 animate-spin" />
+                                Running...
+                              </>
+                            ) : (
+                              <>
+                                <Play className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                                Execute
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() => stopIndividualTest(file.name)}
+                            disabled={!status.runningTests.includes(file.name)}
+                            className="flex-none px-3 sm:px-4 py-2 sm:py-3 h-auto shadow-lg hover:shadow-red-500/25 transition-all duration-300"
+                          >
+                            <Square className="h-3 w-3 sm:h-4 sm:w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </section>
 
         {/* Test Suite Control */}
-        <section>
+        {/* <section>
           <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
             <CardHeader className="pb-4 sm:pb-6">
               <CardTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold">
@@ -947,7 +963,7 @@ export default function AutomationPortfolio() {
               )}
             </CardContent>
           </Card>
-        </section>
+        </section> */}
 
         {/* Code & Recording Display with Refs */}
         {selectedTest && (
@@ -985,6 +1001,20 @@ export default function AutomationPortfolio() {
                   <CardDescription className="text-xs sm:text-sm">
                     Real-time screen capture of automation execution
                   </CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
+                    ✅ Backend Server is Hosted on Ec2 (AWS)
+                  </CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
+                    ✅ You are absolutely right! Capturing full Virtual Display
+                    (not just browser).
+                  </CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
+                    ✅ Start playback from 10–12 seconds to skip display capture
+                    delays during browser launch.
+                  </CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
+                    ✅ Note: This is for demonstration purposes only.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 sm:space-y-4">
                   {videoUrl ? (
@@ -997,7 +1027,7 @@ export default function AutomationPortfolio() {
                         <source src={videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
-                      <Button
+                      {/* <Button
                         variant="outline"
                         className="w-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 py-2 sm:py-3 h-auto text-xs sm:text-sm"
                         onClick={() => window.open(videoUrl, "_blank")}
@@ -1007,7 +1037,7 @@ export default function AutomationPortfolio() {
                           Download Recording
                         </span>
                         <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" />
-                      </Button>
+                      </Button> */}
                     </div>
                   ) : (
                     <div className="text-center py-8 sm:py-12 md:py-16 text-slate-500 dark:text-slate-400 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl min-h-60 sm:min-h-80 md:min-h-[400px] flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900">
@@ -1035,6 +1065,154 @@ export default function AutomationPortfolio() {
             </div>
           </section>
         )}
+
+        {/* Utility Scripts Showcase */}
+        <section>
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
+            <CardHeader className="pb-4 sm:pb-6 md:pb-8">
+              <CardTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                  <Code className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                </div>
+                Handy Utility Scripts
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                Production-ready utility classes for automation testing • Click
+                to copy code
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                {utilityFiles.map((utility, index) => (
+                  <Card
+                    key={index}
+                    className="group relative overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <CardContent className="relative p-4 sm:p-6">
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                          <Code className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            copyUtilityCode(utility.name, utility.content)
+                          }
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-950/50 transition-colors"
+                        >
+                          {copiedUtility === utility.name ? (
+                            <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
+                          ) : (
+                            <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <h3 className="font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white mb-2 sm:mb-3">
+                        {utility.name.replace(".java", "")}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
+                        {utility.description}
+                      </p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleViewSourceCode(utility)}
+                        className="w-full text-xs sm:text-sm group-hover:bg-blue-50 dark:group-hover:bg-blue-950/50 transition-colors font-medium"
+                      >
+                        <Code className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                        View Source Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Utility Code Display with Ref */}
+              {/* <div ref={utilityCodeRef}>
+                {selectedUtility && (
+                  <Card className="bg-slate-900 dark:bg-slate-950 border-slate-700 shadow-2xl">
+                    <CardHeader className="pb-3 sm:pb-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                        <CardTitle className="text-emerald-400 flex items-center gap-2 text-base sm:text-lg md:text-xl">
+                          <Code className="h-4 w-4 sm:h-5 sm:w-5" />
+                          {selectedUtility.name}
+                        </CardTitle>
+                        <Button
+                          onClick={() =>
+                            copyUtilityCode(
+                              selectedUtility.name,
+                              selectedUtility.content
+                            )
+                          }
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-2 h-auto"
+                        >
+                          {copiedUtility === selectedUtility.name ? (
+                            <>
+                              <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                              Copied!
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                              Copy Code
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <pre className="bg-slate-950 text-emerald-400 p-3 sm:p-4 md:p-6 rounded-lg overflow-x-auto text-xs sm:text-sm max-h-60 sm:max-h-80 overflow-y-auto border border-slate-700 font-mono">
+                        <code>{selectedUtility.content}</code>
+                      </pre>
+                    </CardContent>
+                  </Card>
+                )}
+              </div> */}
+              <div ref={utilityCodeRef}>
+                {selectedUtility && (
+                  <Card className="bg-slate-900 dark:bg-slate-950 border-slate-700 shadow-2xl">
+                    <CardHeader className="pb-3 sm:pb-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                        <CardTitle className="text-emerald-400 flex items-center gap-2 text-base sm:text-lg md:text-xl">
+                          <Code className="h-4 w-4 sm:h-5 sm:w-5" />
+                          {selectedUtility.name}
+                        </CardTitle>
+                        <Button
+                          onClick={() =>
+                            copyUtilityCode(
+                              selectedUtility.name,
+                              selectedUtility.content
+                            )
+                          }
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-2 h-auto"
+                        >
+                          {copiedUtility === selectedUtility.name ? (
+                            <>
+                              <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                              Copied!
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                              Copy Code
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <pre className="bg-slate-950 text-emerald-400 p-3 sm:p-4 md:p-6 rounded-lg overflow-x-auto text-xs sm:text-sm max-h-80 sm:max-h-[32rem] overflow-y-auto border border-slate-700 font-mono">
+                        <code>{selectedUtility.content}</code>
+                      </pre>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
         {/* Enhanced Resume CTA Section */}
         <section>
@@ -1108,7 +1286,7 @@ export default function AutomationPortfolio() {
                       icon: Calendar,
                     },
                     { label: "Test Cases", value: "500+", icon: Target },
-                    { label: "Projects", value: "15+", icon: Briefcase },
+                    { label: "Projects", value: "5+", icon: Briefcase },
                     { label: "Success Rate", value: "99%", icon: Star },
                   ].map((stat, index) => (
                     <div key={index} className="text-center">
