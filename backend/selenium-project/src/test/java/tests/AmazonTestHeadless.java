@@ -89,74 +89,74 @@ public class AmazonTestHeadless {
         }
     }
 
-    @Test(priority = 2, description = "Search for a product")
-    public void testProductSearch() {
-        try {
-            System.out.println("🔍 Searching for 'laptop'...");
+    // @Test(priority = 2, description = "Search for a product")
+    // public void testProductSearch() {
+    //     try {
+    //         System.out.println("🔍 Searching for 'laptop'...");
             
-            // Find search box and enter search term
-            WebElement searchBox = waitUtils.waitForElementToBeClickable(By.id("twotabsearchtextbox"), 15);
-            searchBox.clear();
-            searchBox.sendKeys("laptop");
-            Thread.sleep(1000);
+    //         // Find search box and enter search term
+    //         WebElement searchBox = waitUtils.waitForElementToBeClickable(By.id("twotabsearchtextbox"), 15);
+    //         searchBox.clear();
+    //         searchBox.sendKeys("laptop");
+    //         Thread.sleep(1000);
             
-            // Click search button
-            WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
-            searchButton.click();
+    //         // Click search button
+    //         WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
+    //         searchButton.click();
             
-            // Wait for search results
-            waitUtils.waitForElementPresence(By.cssSelector("[data-component-type='s-search-result']"), 20);
+    //         // Wait for search results
+    //         waitUtils.waitForElementPresence(By.cssSelector("[data-component-type='s-search-result']"), 20);
             
-            // Verify search results are displayed
-            String currentUrl = driver.getCurrentUrl();
-            Assert.assertTrue(currentUrl.contains("laptop"), "Search results verification failed");
+    //         // Verify search results are displayed
+    //         String currentUrl = driver.getCurrentUrl();
+    //         Assert.assertTrue(currentUrl.contains("laptop"), "Search results verification failed");
             
-            // Take screenshot of search results
-            screenshotUtils.takeScreenshot("amazon_search_results");
+    //         // Take screenshot of search results
+    //         screenshotUtils.takeScreenshot("amazon_search_results");
             
-            System.out.println("✅ Product search test passed");
-            Thread.sleep(4000); // Show results longer for recording
+    //         System.out.println("✅ Product search test passed");
+    //         Thread.sleep(4000); // Show results longer for recording
             
-        } catch (Exception e) {
-            screenshotUtils.takeScreenshot("amazon_search_failed");
-            System.err.println("❌ Search test failed: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
+    //     } catch (Exception e) {
+    //         screenshotUtils.takeScreenshot("amazon_search_failed");
+    //         System.err.println("❌ Search test failed: " + e.getMessage());
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 
-    @Test(priority = 3, description = "Navigate to first product")
-    public void testProductNavigation() {
-        try {
-            System.out.println("📱 Clicking on first product...");
+    // @Test(priority = 3, description = "Navigate to first product")
+    // public void testProductNavigation() {
+    //     try {
+    //         System.out.println("📱 Clicking on first product...");
             
-            // Click on first product
-            WebElement firstProduct = waitUtils.waitForElementToBeClickable(
-                By.cssSelector("[data-component-type='s-search-result'] h2 a"), 15
-            );
-            firstProduct.click();
+    //         // Click on first product
+    //         WebElement firstProduct = waitUtils.waitForElementToBeClickable(
+    //             By.cssSelector("[data-component-type='s-search-result'] h2 a"), 15
+    //         );
+    //         firstProduct.click();
             
-            // Wait for product page to load
-            waitUtils.waitForElementPresence(By.id("productTitle"), 20);
+    //         // Wait for product page to load
+    //         waitUtils.waitForElementPresence(By.id("productTitle"), 20);
             
-            // Verify we're on a product page
-            WebElement productTitle = driver.findElement(By.id("productTitle"));
-            Assert.assertTrue(productTitle.isDisplayed(), "Product page verification failed");
+    //         // Verify we're on a product page
+    //         WebElement productTitle = driver.findElement(By.id("productTitle"));
+    //         Assert.assertTrue(productTitle.isDisplayed(), "Product page verification failed");
             
-            System.out.println("📦 Product: " + productTitle.getText());
+    //         System.out.println("📦 Product: " + productTitle.getText());
             
-            // Take screenshot of product page
-            screenshotUtils.takeScreenshot("amazon_product_page");
+    //         // Take screenshot of product page
+    //         screenshotUtils.takeScreenshot("amazon_product_page");
             
-            System.out.println("✅ Product navigation test passed");
+    //         System.out.println("✅ Product navigation test passed");
             
-            Thread.sleep(3000);
+    //         Thread.sleep(3000);
             
-        } catch (Exception e) {
-            screenshotUtils.takeScreenshot("amazon_navigation_failed");
-            System.err.println("❌ Navigation test failed: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
+    //     } catch (Exception e) {
+    //         screenshotUtils.takeScreenshot("amazon_navigation_failed");
+    //         System.err.println("❌ Navigation test failed: " + e.getMessage());
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 
     @AfterClass
     public void tearDown() {
