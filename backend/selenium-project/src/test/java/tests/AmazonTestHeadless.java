@@ -13,7 +13,7 @@ import utils.WaitUtils;
 import utils.ScreenshotUtils;
 import java.time.Duration;
 
-public class AmazonTest {
+public class AmazonTestHeadless {
     private WebDriver driver;
     private WebDriverWait wait;
     private WaitUtils waitUtils;
