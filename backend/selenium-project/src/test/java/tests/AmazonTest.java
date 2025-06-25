@@ -7,14 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import utils.WaitUtils;
 import utils.ScreenshotUtils;
 import java.time.Duration;
 
-public class AmazonTest {
+public class AmazonTest{
     private WebDriver driver;
     private WebDriverWait wait;
     private WaitUtils waitUtils;
@@ -25,15 +24,38 @@ public class AmazonTest {
         // Setup ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
         
-        // Configure Chrome options
+        // Configure Chrome options for both desktop and headless
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
+        
+        // Check if running in headless mode
+        String headlessMode = System.getProperty("headless", "false");
+        boolean isHeadless = "true".equals(headlessMode) || 
+                           System.getenv("DISPLAY") == null ||
+                           ":99".equals(System.getenv("DISPLAY"));
+        
+        if (isHeadless) {
+            System.out.println("🖥️ Running in HEADLESS mode (AWS EC2)");
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--remote-debugging-port=9222");
+            options.addArguments("--window-size=1920,1080");
+        } else {
+            System.out.println("🖥️ Running in DESKTOP mode");
+            options.addArguments("--start-maximized");
+        }
+        
+        // Common options for both modes
         options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-plugins");
+        options.addArguments("--disable-images"); // Faster loading
         options.setExperimentalOption("useAutomationExtension", false);
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Increased timeout for EC2
         waitUtils = new WaitUtils(driver);
         screenshotUtils = new ScreenshotUtils(driver);
         
@@ -47,7 +69,7 @@ public class AmazonTest {
             driver.get("https://www.amazon.com");
             
             // Wait for page to load and verify title
-            waitUtils.waitForTitleContains("Amazon", 10);
+            waitUtils.waitForTitleContains("Amazon", 15); // Increased timeout
             String title = driver.getTitle();
             
             System.out.println("📄 Page Title: " + title);
@@ -57,7 +79,7 @@ public class AmazonTest {
             screenshotUtils.takeScreenshot("amazon_homepage");
             
             // Take a small pause to show the page
-            Thread.sleep(2000);
+            Thread.sleep(3000); // Increased for better recording
             
             System.out.println("✅ Amazon launch test passed");
         } catch (Exception e) {
@@ -73,16 +95,17 @@ public class AmazonTest {
             System.out.println("🔍 Searching for 'laptop'...");
             
             // Find search box and enter search term
-            WebElement searchBox = waitUtils.waitForElementToBeClickable(By.id("twotabsearchtextbox"), 10);
+            WebElement searchBox = waitUtils.waitForElementToBeClickable(By.id("twotabsearchtextbox"), 15);
             searchBox.clear();
             searchBox.sendKeys("laptop");
+            Thread.sleep(1000);
             
             // Click search button
             WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
             searchButton.click();
             
             // Wait for search results
-            waitUtils.waitForElementPresence(By.cssSelector("[data-component-type='s-search-result']"), 15);
+            waitUtils.waitForElementPresence(By.cssSelector("[data-component-type='s-search-result']"), 20);
             
             // Verify search results are displayed
             String currentUrl = driver.getCurrentUrl();
@@ -92,7 +115,7 @@ public class AmazonTest {
             screenshotUtils.takeScreenshot("amazon_search_results");
             
             System.out.println("✅ Product search test passed");
-            Thread.sleep(3000); // Show results for 3 seconds
+            Thread.sleep(4000); // Show results longer for recording
             
         } catch (Exception e) {
             screenshotUtils.takeScreenshot("amazon_search_failed");
@@ -108,12 +131,12 @@ public class AmazonTest {
             
             // Click on first product
             WebElement firstProduct = waitUtils.waitForElementToBeClickable(
-                By.cssSelector("[data-component-type='s-search-result'] h2 a"), 10
+                By.cssSelector("[data-component-type='s-search-result'] h2 a"), 15
             );
             firstProduct.click();
             
             // Wait for product page to load
-            waitUtils.waitForElementPresence(By.id("productTitle"), 15);
+            waitUtils.waitForElementPresence(By.id("productTitle"), 20);
             
             // Verify we're on a product page
             WebElement productTitle = driver.findElement(By.id("productTitle"));
@@ -126,7 +149,7 @@ public class AmazonTest {
             
             System.out.println("✅ Product navigation test passed");
             
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             
         } catch (Exception e) {
             screenshotUtils.takeScreenshot("amazon_navigation_failed");
