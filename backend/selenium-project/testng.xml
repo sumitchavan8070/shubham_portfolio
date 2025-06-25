@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="AutomationPortfolioSuite" verbose="1">
+    <listeners>
+        <listener class-name="listeners.TestListener"/>
+    </listeners>
+    
+    <test name="AmazonTest">
+        <classes>
+            <class name="tests.AmazonTest"/>
+        </classes>
+    </test>
+</suite>
