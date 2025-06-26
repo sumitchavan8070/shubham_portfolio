@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DemoQATestSuite">
+    <test name="DemoQATests">
+        <classes>
+            <class name="sampletests.HomePageTest"/>
+            <class name="sampletests.TextBoxTest"/>
+            <class name="sampletests.CheckBoxTest"/>
+        </classes>
+    </test>
+</suite>
