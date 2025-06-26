@@ -69,8 +69,9 @@ interface TestSuite {
   displayName: string;
 }
 
-export const BACKEND_URL = "http://13.203.224.56:5000";
+// export const BACKEND_URL = "http://13.203.224.56:5000";
 // export const BACKEND_URL = "http://localhost:5000";
+export const BACKEND_URL = "https://shubhamaws.meadhikari.com";
 
 export default function AutomationPortfolio() {
   const [testFiles, setTestFiles] = useState<TestFile[]>([]);
