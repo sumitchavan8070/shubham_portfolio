@@ -104,9 +104,9 @@ export default function AutomationPortfolio() {
     fetchTestFiles();
     fetchUtilityFiles();
     fetchTestSuites();
-    checkStatus();
-    const interval = setInterval(checkStatus, 2000);
-    return () => clearInterval(interval);
+    // checkStatus();
+    // const interval = setInterval(checkStatus, 2000);
+    // return () => clearInterval(interval);
   }, []);
 
   // Close mobile menu when clicking outside
@@ -119,7 +119,6 @@ export default function AutomationPortfolio() {
         setMobileMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobileMenuOpen]);
@@ -393,7 +392,7 @@ export default function AutomationPortfolio() {
 
       <div className="relative max-w-7xl mx-auto p-3 sm:p-4 md:p-6 lg:p-8 space-y-6 sm:space-y-8 lg:space-y-12">
         {/* Mobile-First Premium Header with Hamburger Menu */}
-        <header className="relative">
+        {/* <header className="relative">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6 sm:mb-8">
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 mb-4">
@@ -411,7 +410,6 @@ export default function AutomationPortfolio() {
               </div>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden sm:flex items-center gap-3 lg:gap-4">
               <Button
                 variant="outline"
@@ -437,7 +435,6 @@ export default function AutomationPortfolio() {
               <ThemeToggle />
             </div>
 
-            {/* Mobile Hamburger Menu */}
             <div className="sm:hidden mobile-menu-container">
               <Button
                 variant="outline"
@@ -452,7 +449,6 @@ export default function AutomationPortfolio() {
                 )}
               </Button>
 
-              {/* Mobile Menu Dropdown */}
               {mobileMenuOpen && (
                 <div className="absolute top-full right-0 mt-2 w-48 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-2 border-blue-200 dark:border-blue-800 rounded-xl shadow-2xl shadow-blue-500/20 z-40 overflow-hidden">
                   <div className="p-2 space-y-1">
@@ -490,6 +486,123 @@ export default function AutomationPortfolio() {
                 </div>
               )}
             </div>
+          </div>
+        </header> */}
+        <header className="relative">
+          <div className="flex justify-between items-center w-full mb-4 sm:mb-8">
+            {/* Left Icon (Mobile) */}
+            <div className="sm:hidden flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Snail className="h-5 w-5 text-white" />
+              </div>
+            </div>
+
+            {/* Desktop Logo */}
+            <div className="hidden sm:flex flex-1 items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Snail className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-left">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent leading-tight">
+                    Test Automation Portfolio
+                  </h1>
+                  <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium mt-2">
+                    Selenium • Java • TestNG
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden sm:flex items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={downloadResume}
+                className="group relative overflow-hidden bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 backdrop-blur-sm border-2 border-blue-300 dark:border-blue-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 text-base px-6 py-4 h-auto font-semibold"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <FileText className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-slate-900 dark:text-white">
+                      Download Resume
+                    </div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      PDF • Professional CV
+                    </div>
+                  </div>
+                  <Download className="h-5 w-5 text-blue-600 dark:text-blue-400 group-hover:translate-y-1 group-hover:scale-110 transition-all duration-300" />
+                </div>
+              </Button>
+              <ThemeToggle />
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <div className="sm:hidden mobile-menu-container relative">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="relative z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-2 border-blue-200 dark:border-blue-800 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </Button>
+
+              {/* Mobile Dropdown Menu */}
+              {mobileMenuOpen && (
+                <div className="absolute top-full right-0 mt-2 w-60 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-2 border-blue-200 dark:border-blue-800 rounded-xl shadow-2xl shadow-blue-500/20 z-40 overflow-hidden">
+                  <div className="p-2 space-y-1">
+                    <Button
+                      variant="ghost"
+                      onClick={downloadResume}
+                      className="w-full justify-start gap-3 px-4 py-3 h-auto text-left hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <FileText className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-medium">Download Resume</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          PDF Format
+                        </div>
+                      </div>
+                    </Button>
+
+                    <div className="px-4 py-3 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                          <Zap className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Theme</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400">
+                            Dark/Light Mode
+                          </div>
+                        </div>
+                      </div>
+                      <ThemeToggle />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Title */}
+          <div className="sm:hidden text-center mb-4">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+              Test Automation Portfolio
+            </h1>
+            <p className="text-sm text-slate-600 dark:text-slate-300 font-medium mt-1">
+              Selenium • Java • TestNG
+            </p>
           </div>
         </header>
 
