@@ -69,7 +69,7 @@ interface TestSuite {
   displayName: string;
 }
 
-export const BACKEND_URL = "http://43.204.98.173:5000";
+export const BACKEND_URL = "http://13.203.224.56:5000";
 // export const BACKEND_URL = "http://localhost:5000";
 
 export default function AutomationPortfolio() {
