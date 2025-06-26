@@ -1100,7 +1100,7 @@ export default function ProjectExplorer() {
         </div>
 
         {/* File Viewer with minimum height on mobile */}
-        <div className="flex-1 flex flex-col overflow-hidden min-h-[400px]">
+        <div className="flex-1 flex flex-col overflow-hidden min-h-[300px]">
           {selectedFile ? (
             <>
               <div className="p-2 sm:p-3 border-b font-mono text-xs sm:text-sm bg-muted/40 dark:bg-muted/10 flex items-center">
