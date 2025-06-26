@@ -25,6 +25,9 @@ app.use(
   express.static(path.join(__dirname, "selenium-project/test-output"))
 );
 
+const projectRoutes = require("./routes/project");
+app.use("/api/projects", projectRoutes);
+
 // Health check endpoint
 app.get("/status", (req, res) => {
   res.json({

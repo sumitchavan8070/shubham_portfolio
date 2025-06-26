@@ -42,6 +42,8 @@ import {
   Snail,
 } from "lucide-react";
 import Image from "next/image";
+import ProjectExplorer from "@/components/project-explorer";
+// import sampleProjects from "@/data/sample-projects";
 
 interface TestFile {
   name: string;
@@ -66,6 +68,9 @@ interface TestSuite {
   name: string;
   displayName: string;
 }
+
+//export const BACKEND_URL = "http://43.204.98.173:5000";
+export const BACKEND_URL = "http://localhost:5000";
 
 export default function AutomationPortfolio() {
   const [testFiles, setTestFiles] = useState<TestFile[]>([]);
@@ -93,8 +98,6 @@ export default function AutomationPortfolio() {
   const sourceCodeRef = useRef<HTMLDivElement>(null);
   const recordingRef = useRef<HTMLDivElement>(null);
   const utilityCodeRef = useRef<HTMLDivElement>(null);
-
-  const BACKEND_URL = "http://43.204.98.173:5000";
 
   useEffect(() => {
     fetchTestFiles();
@@ -772,6 +775,10 @@ export default function AutomationPortfolio() {
           </Card>
         </section> */}
 
+        {/* <ProjectExplorer projects={sampleProjects} /> */}
+
+        <ProjectExplorer />
+
         <section>
           <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-0 shadow-xl shadow-slate-500/10">
             <CardHeader className="pb-4 sm:pb-6 md:pb-8">
@@ -1214,99 +1221,6 @@ export default function AutomationPortfolio() {
           </Card>
         </section>
 
-        {/* Enhanced Resume CTA Section */}
-        <section>
-          <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 border-0 shadow-2xl shadow-blue-500/25">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-white/20 to-transparent rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-purple-400/20 to-transparent rounded-full blur-2xl"></div>
-
-            <CardContent className="relative p-6 sm:p-8 md:p-12 lg:p-16 text-center">
-              <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
-                <div className="space-y-4">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto shadow-2xl">
-                    <Award className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-                    Ready to Hire a
-                    <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                      Test Automation Expert?
-                    </span>
-                  </h2>
-                  <p className="text-lg sm:text-xl md:text-2xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
-                    3.7+ years of proven expertise in Selenium WebDriver,
-                    TestNG, and CI/CD automation.
-                    <span className="font-semibold text-white">
-                      {" "}
-                      Ready to deliver quality at scale.
-                    </span>
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
-                  <Button
-                    onClick={downloadResume}
-                    className="group relative overflow-hidden bg-white text-blue-600 hover:bg-blue-50 px-8 sm:px-12 py-4 sm:py-6 h-auto text-lg sm:text-xl font-bold shadow-2xl hover:shadow-white/25 transition-all duration-300 hover:scale-105 border-0"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                      </div>
-                      <div className="text-left">
-                        <div className="font-bold">Download Full Resume</div>
-                        <div className="text-sm text-blue-500 group-hover:text-blue-600 transition-colors">
-                          Complete Professional Profile
-                        </div>
-                      </div>
-                      <Download className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-y-1 group-hover:scale-110 transition-all duration-300" />
-                    </div>
-                  </Button>
-
-                  <div className="flex items-center gap-4 sm:gap-6 text-white/80">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
-                      <span className="font-medium text-sm sm:text-base">
-                        Immediate Availability
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
-                      <span className="font-medium text-sm sm:text-base">
-                        Remote Ready
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-white/20">
-                  {[
-                    {
-                      label: "Years Experience",
-                      value: "3.7+",
-                      icon: Calendar,
-                    },
-                    { label: "Test Cases", value: "500+", icon: Target },
-                    { label: "Projects", value: "5+", icon: Briefcase },
-                    { label: "Success Rate", value: "99%", icon: Star },
-                  ].map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                        <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                      </div>
-                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs sm:text-sm text-blue-200">
-                        {stat.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
         {/* Skills Showcase */}
         <section>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
@@ -1362,6 +1276,99 @@ export default function AutomationPortfolio() {
           </div>
         </section>
       </div>
+
+      {/* Enhanced Resume CTA Section */}
+      <section>
+        <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 border-0 shadow-2xl shadow-blue-500/25">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-white/20 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-purple-400/20 to-transparent rounded-full blur-2xl"></div>
+
+          <CardContent className="relative p-6 sm:p-8 md:p-12 lg:p-16 text-center">
+            <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+              <div className="space-y-4">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto shadow-2xl">
+                  <Award className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                  Ready to Hire a
+                  <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                    Test Automation Expert?
+                  </span>
+                </h2>
+                <p className="text-lg sm:text-xl md:text-2xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
+                  3.7+ years of proven expertise in Selenium WebDriver, TestNG,
+                  and CI/CD automation.
+                  <span className="font-semibold text-white">
+                    {" "}
+                    Ready to deliver quality at scale.
+                  </span>
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+                <Button
+                  onClick={downloadResume}
+                  className="group relative overflow-hidden bg-white text-blue-600 hover:bg-blue-50 px-8 sm:px-12 py-4 sm:py-6 h-auto text-lg sm:text-xl font-bold shadow-2xl hover:shadow-white/25 transition-all duration-300 hover:scale-105 border-0"
+                >
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-bold">Download Full Resume</div>
+                      <div className="text-sm text-blue-500 group-hover:text-blue-600 transition-colors">
+                        Complete Professional Profile
+                      </div>
+                    </div>
+                    <Download className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-y-1 group-hover:scale-110 transition-all duration-300" />
+                  </div>
+                </Button>
+
+                <div className="flex items-center gap-4 sm:gap-6 text-white/80">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
+                    <span className="font-medium text-sm sm:text-base">
+                      Immediate Availability
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
+                    <span className="font-medium text-sm sm:text-base">
+                      Remote Ready
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-white/20">
+                {[
+                  {
+                    label: "Years Experience",
+                    value: "3.7+",
+                    icon: Calendar,
+                  },
+                  { label: "Test Cases", value: "500+", icon: Target },
+                  { label: "Projects", value: "5+", icon: Briefcase },
+                  { label: "Success Rate", value: "99%", icon: Star },
+                ].map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                      <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                    </div>
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs sm:text-sm text-blue-200">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
 
       {/* Floating Resume Button for Mobile */}
       <div className="fixed bottom-6 right-6 sm:hidden z-50">
