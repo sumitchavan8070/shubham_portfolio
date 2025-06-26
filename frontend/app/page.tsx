@@ -367,8 +367,9 @@ export default function AutomationPortfolio() {
 
   const downloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/Shubham_Chavan_Resume.pdf";
-    link.download = "Shubham_Chavan_Resume.pdf";
+    link.href = "/Resume_Shubham_Chavan_3_7Y_Automation_Test_Enginner_QA.pdf";
+    link.download =
+      "Resume_Shubham_Chavan_3_7Y_Automation_Test_Enginner_QA.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
